@@ -1,11 +1,11 @@
 import Navbar from "../../components/navbar";
 import Main from "../../components/main";
 
-const Home = ()=>{
-    return(
+const Home = () => {
+    return (
         <>
-        <Navbar />
-        <Main/>
+            <Navbar />
+            <Main />
         </>
     )
 }

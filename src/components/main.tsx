@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import requests from '../requests'
-import { ComponentsType } from './type'
+import { MoviesType } from './type'
 const Main = () => {
-    const [movies, setMovies] = useState<ComponentsType[0]['Movie'][]>([]);
+    const [movies, setMovies] = useState<MoviesType>([]);
     const movie = movies[Math.floor(Math.random() * movies.length)]
     useEffect(() => {
         axios.get(requests.requestPopular).then((response) => {
