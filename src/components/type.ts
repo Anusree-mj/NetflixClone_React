@@ -13,4 +13,10 @@ export type MoviesType = {
     vote_average: number;
     vote_count: number;
 
+}[];
+
+export type RowType = {
+    rowId:number;
+    title: string;
+    fetchURL: string;
 }[]

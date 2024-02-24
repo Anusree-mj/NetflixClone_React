@@ -5,6 +5,7 @@ import { MoviesType } from './type'
 const Main = () => {
     const [movies, setMovies] = useState<MoviesType>([]);
     const movie = movies[Math.floor(Math.random() * movies.length)]
+    
     useEffect(() => {
         axios.get(requests.requestPopular).then((response) => {
             setMovies(response.data.results)
