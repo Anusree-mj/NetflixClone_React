@@ -1,21 +1,30 @@
 import React, { useState } from 'react'
 import Navbar from '../../components/navbar'
-import { Link } from 'react-router-dom'
-import { SignUpTypes } from './type';
-import { UserAuth } from '../../context/AuthContext';
+import { Link, useNavigate } from 'react-router-dom'
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
+import { useAuth } from '../../components/AuthContext';
 
 const Signup = () => {
-    const [email, setEmail] = useState<SignUpTypes>()
-    const [password, setPassword] = useState<SignUpTypes>()
-    const { user,signUp } = UserAuth();
+    const { updateUser } = useAuth();
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        try {
-            await signUp(email, password)
-        } catch (error) {
-            console.log(error)
-        }
+        await createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log(user);
+                updateUser(user);
+                navigate('/')
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage);
+            })
     }
 
     return (

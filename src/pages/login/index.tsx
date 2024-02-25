@@ -1,7 +1,34 @@
-import React from 'react'
-import Navbar from '../../components/navbar'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import Navbar from '../../components/navbar';
+import { Link } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
+import { NavLink, useNavigate } from 'react-router-dom'
+
 const Login = () => {
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+
+    const onLogin = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                setError('');
+                const user = userCredential.user;
+                navigate("/")
+                console.log(user);
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage)
+                setError("Invalid email or password !");
+            });
+
+    }
+
     return (
         <>
             <Navbar />
@@ -11,10 +38,18 @@ const Login = () => {
                 <div className='fixed w-full px-4 py-24 z-50'>
                     <div className='max-w-[450px] h-[500px] mx-auto bg-black/75 text-white'>
                         <div className='max-w-[320px] mx-auto py-16'>
-                            <h1 className='text-3xl font-bold'>Sign In</h1>
-                            <form className='w-full flex flex-col py-4'>
-                                <input className='p-3 my-2 bg-gray-700 rounded' type="email" placeholder='Email' />
-                                <input className='p-3 my-2 bg-gray-700 rounded' type="password" placeholder='Password' />
+                            <h1 className='text-3xl font-bold'>Log In</h1>
+                            {error ? <p className='p-1 text-red-600 bg-white bg-opacity-15 my-2'>{error}</p> : null}
+
+                            <form onSubmit={onLogin} className='w-full flex flex-col py-4'>
+                                <input onChange={(e: React.ChangeEvent<any>): void => {
+                                    setEmail(e.target.value);
+                                }}
+                                    className='p-3 my-2 bg-gray-700 rounded' type="email" placeholder='Email' />
+                                <input onChange={(e: React.ChangeEvent<any>): void => {
+                                    setPassword(e.target.value);
+                                }}
+                                    className='p-3 my-2 bg-gray-700 rounded' type="password" placeholder='Password' />
                                 <button className='bg-red-600 py-2 my-6 rounded font-bold'>Sign In</button>
                                 <div className='flex justify-between items-center text-sm text-gray-600'>
                                     <p><input className='mr-2' type="checkbox" />Remember me</p>
