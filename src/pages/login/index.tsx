@@ -11,29 +11,29 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    const onLogin = (e: { preventDefault: () => void; }) => {
+    const onLogin = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                setError('');
-                const user = userCredential.user;
-                navigate("/")
-                console.log(user);
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage)
-                setError("Invalid email or password !");
-            });
 
-    }
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            navigate("/");
+            console.log(user);
+            setError('');
+        } catch (error) {
+            console.log(error);
+            setError("Invalid email or password !");
+        }
+    };
+
 
     return (
         <>
             <Navbar />
             <div className='w-full h-screen'>
-                <img className='hidden sm:block absolute w-full h-full object-cover' src="https://assets.nflxext.com/ffe/siteui/vlv3/2e07bc25-8b8f-4531-8e1f-7e5e33938793/e4b3c14a-684b-4fc4-b14f-2b486a4e9f4e/IN-en-20240219-popsignuptwoweeks-perspective_alpha_website_small.jpg" alt="/" />
+                <img className='hidden sm:block absolute w-full h-full object-cover' 
+                src="https://assets.nflxext.com/ffe/siteui/vlv3/2e07bc25-8b8f-4531-8e1f-7e5e33938793/e4b3c14a-684b-4fc4-b14f-2b486a4e9f4e/IN-en-20240219-popsignuptwoweeks-perspective_alpha_website_small.jpg" 
+                alt="/" />
                 <div className='bg-black/60 fixed top-0 left-0 w-full h-screen'></div>
                 <div className='fixed w-full px-4 py-24 z-50'>
                     <div className='max-w-[450px] h-[500px] mx-auto bg-black/75 text-white'>

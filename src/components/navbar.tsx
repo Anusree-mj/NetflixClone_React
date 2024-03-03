@@ -2,25 +2,22 @@ import React from 'react'
 import { translations } from '../helpers'
 import { Link } from 'react-router-dom';
 import { useAuth } from './AuthContext';
-import {  signOut } from "firebase/auth";
-import {auth} from '../firebase';
+import { signOut } from "firebase/auth";
+import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 
 
 const Navbar = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-
-  const handleLogout = () => {               
+  const handleLogout = () => {
     signOut(auth).then(() => {
-    // Sign-out successful.
-        navigate("/");
-        console.log("Signed out successfully")
+      navigate("/");
+      console.log("Signed out successfully")
     }).catch((error) => {
-    // An error happened.
-    });
-}
-
+    })
+  }
+  
   return (
     <div className='flex items-center justify-between p-4 z-[100] w-full absolute'>
       <Link to={'/'}>
@@ -33,7 +30,7 @@ const Navbar = () => {
           </Link>
           <Link to={'/signup'}>
             <button onClick={handleLogout} className='bg-red-600 px-3 py-0.5 rounded cursor-pointer text-white'>
-             Logout
+              Logout
             </button>
           </Link>
         </div>
@@ -49,9 +46,7 @@ const Navbar = () => {
           </Link>
         </div>
       )}
-
     </div>
   )
 }
-
 export default Navbar

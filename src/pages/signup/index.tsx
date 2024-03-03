@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import Navbar from '../../components/navbar'
 import { Link, useNavigate } from 'react-router-dom'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
 import { useAuth } from '../../components/AuthContext';
+import { setDoc, doc } from 'firebase/firestore'
 
 const Signup = () => {
     const { updateUser } = useAuth();
@@ -18,6 +19,9 @@ const Signup = () => {
                 const user = userCredential.user;
                 console.log(user);
                 updateUser(user);
+                setDoc(doc(db, 'users', email), {
+                    savedShows: []
+                })
                 navigate('/')
             })
             .catch((error) => {
