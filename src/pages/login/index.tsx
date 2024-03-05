@@ -50,7 +50,7 @@ const Login = () => {
                                     setPassword(e.target.value);
                                 }}
                                     className='p-3 my-2 bg-gray-700 rounded' type="password" placeholder='Password' />
-                                <button className='bg-red-600 py-2 my-6 rounded font-bold'>Sign In</button>
+                                <button className='bg-red-600 py-2 my-6 rounded font-bold'>Log In</button>
                                 <div className='flex justify-between items-center text-sm text-gray-600'>
                                     <p><input className='mr-2' type="checkbox" />Remember me</p>
                                     <p>Need Help?</p>
