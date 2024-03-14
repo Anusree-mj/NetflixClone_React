@@ -4,13 +4,9 @@ import { useAuth } from './AuthContext'
 import { db } from '../firebase';
 import { updateDoc, doc, onSnapshot } from 'firebase/firestore';
 import { AiOutlineClose } from 'react-icons/ai'
+import { SavedShow } from './type';
 
 
-interface SavedShow {
-  id: number;
-  img: string;
-  title: string;
-}
 
 const SavedShows = () => {
   const [movies, setMovies] = useState<SavedShow[]>([]);
