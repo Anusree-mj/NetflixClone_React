@@ -4,13 +4,9 @@ import { MoviesType } from './type'
 import { useAuth } from './AuthContext';
 import { db } from '../firebase';
 import { arrayUnion, doc, updateDoc } from 'firebase/firestore'
+import { MovieProps } from './type';
 
-interface MoviesProps {
-    item: MoviesType[0];
-    handleMovieClick: (movieId: number) => void;
-}
-
-const Movies = ({ item, handleMovieClick }: MoviesProps) => {
+const Movies = ({ item, handleMovieClick }: MovieProps) => {
     const [like, setLike] = useState(false);
     const [saved, setSaved] = useState(false);
     const { user } = useAuth();

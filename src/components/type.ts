@@ -14,9 +14,18 @@ export type MoviesType = {
     vote_count: number;
 
 }[];
-
+export type MovieProps={
+    item: MoviesType[0];
+    handleMovieClick: (movieId: number) => void;
+}
 export type RowType = {
     rowId:number;
     title: string;
     fetchURL: string;
 }[]
+
+export type SavedShow={
+    id: number;
+    img: string;
+    title: string;
+}

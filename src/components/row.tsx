@@ -10,7 +10,6 @@ import { api_key } from '../requests';
 
 const Row = ({ title, fetchURL, rowId }: RowType[0]) => {
     const [movies, setMovies] = useState<MoviesType>([]);
-    const [selectedMovieId, setSelectedMovieId] = useState<number | null>(null);
     const [trailerUrlId, setTrailerUrlId] = useState<null | { key: string }>(null);
     const [showTrailer, setShowTrailer] = useState<boolean>(false);
 
@@ -31,7 +30,7 @@ const Row = ({ title, fetchURL, rowId }: RowType[0]) => {
     }
 
     const opts = {
-        height: '390',
+        height: '490',
         width: '100%',
         playerVars: {
             autoplay: 1,
@@ -45,11 +44,11 @@ const Row = ({ title, fetchURL, rowId }: RowType[0]) => {
                 setTrailerUrlId(response.data.results[0]);
                 setShowTrailer(true);
             } else {
-                setTrailerUrlId(null); // Reset trailerUrlId if no trailer found
+                setTrailerUrlId(null);
             }
         } catch (error) {
             console.error('Error fetching trailer:', error);
-            setTrailerUrlId(null); // Reset trailerUrlId on error
+            setTrailerUrlId(null);
         }
     };
 
@@ -74,9 +73,9 @@ const Row = ({ title, fetchURL, rowId }: RowType[0]) => {
             </div>
             {showTrailer && (
                 <div>
-                    <div  className="relative">
-                    <button className="bg-white opacity-30 hover:opacity-100 cursor-pointer z-10 absolute top-0 right-0 mr-4 p-2"
-                        onClick={handleCloseTrailer}><AiOutlineClose /></button><br /><br />
+                    <div className="relative">
+                        <button className="bg-white opacity-30 hover:opacity-100 cursor-pointer z-10 absolute top-0 right-0 mr-4 p-2"
+                            onClick={handleCloseTrailer}><AiOutlineClose /></button><br /><br />
                     </div>
                     <YouTube videoId={trailerUrlId?.key} opts={opts} />
                 </div>
